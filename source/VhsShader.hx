@@ -6,13 +6,24 @@ class VhsShader extends FlxShader
         #pragma header
         
         uniform float iTime;
+		uniform sampler2D noiseTexture;
+		uniform float noisePercent;
+
+		highp float rand(vec2 co)
+		{
+			highp float a = 12.9898;
+			highp float b = 78.233;
+			highp float c = 43758.5453;
+			highp float dt= dot(co.xy ,vec2(a,b));
+			highp float sn= mod(dt,3.14);
+			return fract(sin(sn) * c);
+		}
 		
 		float noise(vec2 p)
 		{
-			float s = texture2D(bitmap,vec2(1.,2.*cos(iTime))*iTime*8. + p*1.).x;
-			s *= s;
-			return s;
+			return rand(p) * noisePercent;
 		}
+		
 
 		float onOff(float a, float b, float c)
 		{
@@ -70,10 +81,16 @@ class VhsShader extends FlxShader
 	{
 		super();
 		iTime.value = [0.0];
+		noisePercent.value = [0.0];
 	}
 
 	public function update(elapsed:Float)
 	{
 		iTime.value[0] += elapsed;
+	}
+
+	public function setNoisePercent(amount:Float)
+	{
+		noisePercent.value[0] = amount;
 	}
 }
