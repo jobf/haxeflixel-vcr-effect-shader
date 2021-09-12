@@ -3,28 +3,27 @@ import flixel.system.FlxAssets.FlxShader;
 class VhsShader extends FlxShader
 {
 	@:glFragmentSource('
-        #pragma header
-        
-        uniform float iTime;
+		#pragma header
+		
+		uniform float iTime;
 		uniform sampler2D noiseTexture;
 		uniform float noisePercent;
-
-		highp float rand(vec2 co)
+		
+		float rand(vec2 co)
 		{
-			highp float a = 12.9898;
-			highp float b = 78.233;
-			highp float c = 43758.5453;
-			highp float dt= dot(co.xy ,vec2(a,b));
-			highp float sn= mod(dt,3.14);
+			float a = 12.9898;
+			float b = 78.233;
+			float c = 43758.5453;
+			float dt= dot(co.xy ,vec2(a,b));
+			float sn= mod(dt,3.14);
 			return fract(sin(sn) * c);
 		}
-		
+			
 		float noise(vec2 p)
 		{
 			return rand(p) * noisePercent;
 		}
 		
-
 		float onOff(float a, float b, float c)
 		{
 			return step(c, sin(iTime + a*cos(iTime*b)));
@@ -76,7 +75,8 @@ class VhsShader extends FlxShader
 			video *= (12.+mod(uv.y*30.+iTime,1.))/13.;
 			
 			gl_FragColor = vec4(video,1.0);
-        }')
+		}
+		')
 	public function new()
 	{
 		super();
