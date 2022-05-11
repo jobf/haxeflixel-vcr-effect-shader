@@ -1,5 +1,23 @@
 import flixel.system.FlxAssets.FlxShader;
+class VhsEffect 
+{ 
+  public var shader: VhsShader = new VhsShader();
+	
+  public function new(){
+    shader.iTime.value = [0.0];
+    shader.noisePercent.value = [0.0];
+  }
 
+public function setNoisePercent(amount:Float)
+{
+  shader.noisePercent.value[0] = amount;
+}
+public function update(elapsed:Float)
+{
+  shader.iTime.value[0] += elapsed;
+}
+	
+}
 class VhsShader extends FlxShader
 {
 	@:glFragmentSource('
@@ -80,17 +98,5 @@ class VhsShader extends FlxShader
 	public function new()
 	{
 		super();
-		iTime.value = [0.0];
-		noisePercent.value = [0.0];
-	}
-
-	public function update(elapsed:Float)
-	{
-		iTime.value[0] += elapsed;
-	}
-
-	public function setNoisePercent(amount:Float)
-	{
-		noisePercent.value[0] = amount;
 	}
 }
