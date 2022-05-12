@@ -24,7 +24,7 @@ class PlayState extends FlxState
 		bg = new FlxSprite(0, 0, "assets/images/jungle.png");
 		bg.shader = shader;
 		add(bg);
-
+                FlxG.mouse.visible = false;
 		initHelpDisplay();
 	}
 
